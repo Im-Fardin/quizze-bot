@@ -3,7 +3,7 @@ import query
 from dotenv import load_dotenv
 import os
 import flask
-import requests as request
+from flask import request
 
 load_dotenv()
 BOT_TOKEN = os.getenv('BOT_TOKEN')
