@@ -10,7 +10,7 @@ BOT_TOKEN = os.getenv('BOT_TOKEN')
 
 
 bot =TeleBot(BOT_TOKEN)
-app = flask(__name__)
+app = flask.Flask(__name__)
 user_answers = {}
 
 
