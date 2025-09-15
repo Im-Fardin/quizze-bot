@@ -4,6 +4,9 @@ from dotenv import load_dotenv
 import os
 import flask
 from flask import request
+from schema import create_tables
+
+create_tables()
 
 load_dotenv()
 BOT_TOKEN = os.getenv('BOT_TOKEN')
