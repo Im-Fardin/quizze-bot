@@ -1,23 +1,24 @@
-import sqlite3
+import psycopg2
 import os 
 from dotenv import load_dotenv 
 
 load_dotenv()
 
 
-base_dir = os.path.dirname(os.path.abspath(__file__))
-db_dir = os.path.join(base_dir ,os.getenv('db_name') )
+db_url = os.getenv('DATABASE_URL') 
+
+
+
 
 
 
 def create_tables():
-    conn = sqlite3.connect(db_dir)
+    conn = psycopg2.connect(db_url)
     cur = conn.cursor()
 
-    # questions
     cur.execute('''
         CREATE TABLE IF NOT EXISTS questions (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            id SERIAL PRIMARY KEY,
             question TEXT NOT NULL,
             option1 TEXT NOT NULL,
             option2 TEXT NOT NULL,
@@ -27,11 +28,10 @@ def create_tables():
         )
     ''')
 
-    # Results 
     cur.execute('''
         CREATE TABLE IF NOT EXISTS results (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            user_id INTEGER NOT NULL,
+            id SERIAL PRIMARY KEY,
+            user_id BIGINT NOT NULL,
             score INTEGER NOT NULL
         )
     ''')
