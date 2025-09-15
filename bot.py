@@ -17,6 +17,7 @@ user_answers = {}
 # Start command
 @bot.message_handler(commands=['start'])
 def send_welcome(message):
+    print(f"✅ /start handler triggered for user {message.from_user.id}")
     markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
     markup.add("Add Question", "Take Quiz", "My Results")
     bot.send_message(message.chat.id, "Welcome to Quiz Bot!", reply_markup=markup)
