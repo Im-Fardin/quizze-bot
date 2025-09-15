@@ -5,13 +5,9 @@ from dotenv import load_dotenv
 load_dotenv()
 
 
-db_name =os.getenv('db_name')
+base_dir = os.path.dirname(os.path.abspath(__file__))
+db_dir = os.path.join(base_dir ,os.getenv('db_name') )
 
-temp_dir = "/tmp/temp"
-os.makedirs(temp_dir,exist_ok=True) 
-
-# Full path to the database
-db_dir = os.path.join(temp_dir, db_name)
 
 
 def create_tables():
