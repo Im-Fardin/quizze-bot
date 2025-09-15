@@ -9,7 +9,7 @@ load_dotenv()
 BOT_TOKEN = os.getenv('BOT_TOKEN')
 
 
-bot =TeleBot(BOT_TOKEN)
+bot =TeleBot(BOT_TOKEN,threaded=False)
 app = flask.Flask(__name__)
 user_answers = {}
 
