@@ -2,13 +2,14 @@ from telebot import TeleBot , types
 import query
 from dotenv import load_dotenv
 import os
+import flask
 
 load_dotenv()
 BOT_TOKEN = os.getenv('BOT_TOKEN')
 
 
 bot =TeleBot(BOT_TOKEN)
-
+app = flask(__name__)
 user_answers = {}
 
 
@@ -122,26 +123,15 @@ def finish_quiz(chat_id, user_id):
 
 
 
-# --- Flask route to receive updates ---
 @app.route(f"/{BOT_TOKEN}", methods=["POST"])
-def receive_update():
-    json_str = request.get_data().decode("utf-8")
-    update = types.Update.de_json(json_str)
+def webhook():
+    update = types.Update.de_json(request.get_data().decode("utf-8"))
     bot.process_new_updates([update])
     return "OK", 200
 
-# --- Set webhook when app starts ---
-@app.route("/set_webhook", methods=["GET"])
-def set_webhook():
-    bot.remove_webhook()
-    bot.set_webhook(url=f"{WEBHOOK_URL}/{BOT_TOKEN}")
-    return "Webhook set!", 200
-
-
-# --- Optional root route ---
-@app.route("/", methods=["GET"])
+@app.route("/")
 def index():
     return "Bot is running!", 200
 
 if __name__ == "__main__":
-    app.run(debug=False, port=int(os.environ.get("PORT", 5000)))
+    app.run(host="0.0.0.0", port=8080)
