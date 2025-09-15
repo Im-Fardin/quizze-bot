@@ -126,6 +126,7 @@ def finish_quiz(chat_id, user_id):
 
 @app.route(f"/{BOT_TOKEN}", methods=["POST"])
 def webhook():
+    print("Webhook triggered!")  # ✅ Add this line
     update = types.Update.de_json(request.get_data().decode("utf-8"))
     bot.process_new_updates([update])
     return "OK", 200
